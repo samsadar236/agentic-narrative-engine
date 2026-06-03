@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎲 DungeonMind AI
+# DungeonMind AI
 
 ### An LLM-Powered Dungeon Master with Persistent, Decaying Memory
 
@@ -12,7 +12,7 @@
 
 *A text-based RPG where the DM actually remembers — your name, your companions, your choices, your world.*
 
-**[▶ Live Demo](#)** · **[📸 Screenshots](#-screenshots)** · **[🏗 Architecture](#-architecture)**
+ **[📸 Screenshots](#-screenshots)** · **[🏗 Architecture](#-architecture)**
 
 </div>
 
@@ -26,15 +26,10 @@ Most LLM-powered games forget you the moment the context window fills. DungeonMi
 
 ---
 
-## 🎮 Demo
 
-> 🔗 **[Live Demo — Add your link here](#)**
+## Screenshots
 
----
 
-## 📸 Screenshots
-
-> *Add your gameplay screenshots here — DM narrative, NPC dialogue, quest tracking in action*
 
 | Gameplay | Memory in Action |
 |:---:|:---:|
@@ -42,7 +37,7 @@ Most LLM-powered games forget you the moment the context window fills. DungeonMi
 
 ---
 
-## ✨ Features
+## Features
 
 - **Three-Tier Memory** — Short-term context window, rolling turn buffer, and a fully structured long-term world state tracking characters, items, locations, quests, events, and decisions
 - **Hybrid RAG Retrieval** — BM25 keyword search + ChromaDB vector search merged via Reciprocal Rank Fusion for accurate, relevant context injection every turn
@@ -54,7 +49,7 @@ Most LLM-powered games forget you the moment the context window fills. DungeonMi
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart TB
@@ -110,15 +105,15 @@ flowchart TB
 
 ---
 
-## 🧩 Components
+## Components
 
-### ⚡ Groq API — `llama-3.1-8b-instant`
+### Groq API — `llama-3.1-8b-instant`
 
 Groq's custom LPU hardware makes `llama-3.1-8b-instant` return responses in under a second — essential for an interactive game where latency kills immersion. The model handles two distinct tasks: generating rich, continuous DM narrative prose during gameplay, and returning a strict structured JSON object for memory extraction every 5 turns. A two-stage parser (direct `json.loads` → regex `{...}` fallback) handles cases where the model wraps its output in markdown code fences.
 
 ---
 
-### 🕸️ LangGraph — Pipeline Orchestration
+### LangGraph — Pipeline Orchestration
 
 Defines the game's processing flow as a directed acyclic graph with three nodes. Every turn, the graph is invoked with the full `AgentState` (a `TypedDict` carrying all memory, the user input, and turn metadata). Each node transforms a slice of the state and passes it downstream. LangGraph makes the pipeline declarative, easy to extend (add a new node with one `add_node` call), and robust to node failures.
 
@@ -128,7 +123,7 @@ cleaner_node → dm_node → unified_extractor_node → END
 
 ---
 
-### 🧠 Memory Architecture
+### Memory Architecture
 
 | Layer | Implementation | Max Size | Purpose |
 |-------|---------------|----------|---------|
@@ -148,7 +143,7 @@ cleaner_node → dm_node → unified_extractor_node → END
 
 ---
 
-### 🔍 Hybrid RAG System
+### Hybrid RAG System
 
 **SentenceTransformer (`all-MiniLM-L6-v2`)** — A compact, fast embedding model that runs entirely locally (no API cost). Every LTM entry is encoded into a 384-dimensional dense vector and stored in ChromaDB.
 
@@ -166,7 +161,7 @@ BM25 contributes **0.6 × RRF weight** (keyword precision prioritized); ChromaDB
 
 ---
 
-### 📉 Memory Decay System
+### Memory Decay System
 
 Each LTM entry carries `relevance_score` (set by the extractor at insertion time: 1.0 = critical, 0.7 = important, 0.4 = minor) and `last_updated_turn`. Relevance decays exponentially with age:
 
@@ -188,13 +183,13 @@ Entries whose relevance drops below `0.1` are removed by `cleaner_node` every 30
 
 ---
 
-### 🧹 cleaner_node — Memory Pruning
+### cleaner_node — Memory Pruning
 
 Runs every 30 turns with zero API calls. Iterates through `items`, `locations`, `npcs`, `events`, and `decisions` in LTM and drops any entry below the `0.1` relevance threshold using per-section decay rates. Keeps the long-term memory from ballooning indefinitely in very long sessions.
 
 ---
 
-### 🎲 dm_node — The Dungeon Master
+### dm_node — The Dungeon Master
 
 Runs every turn. Builds the DM's system prompt by combining:
 1. A compact world-state summary (`build_ltm_summary`) — player stats, active NPCs, quests, recent events
@@ -205,7 +200,7 @@ Makes one Groq API call (max 600 tokens response) and appends both the user mess
 
 ---
 
-### 🔍 unified_extractor_node — Structured Memory Extraction
+### unified_extractor_node — Structured Memory Extraction
 
 Runs every 5 turns. Sends the filtered LTM + recent turns buffer to the LLM with a strict JSON schema prompt, then:
 1. Merges player and NPC updates into LTM
@@ -216,7 +211,7 @@ Runs every 5 turns. Sends the filtered LTM + recent turns buffer to the LLM with
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Library | Role |
 |---------|------|
@@ -230,14 +225,10 @@ Runs every 5 turns. Sends the filtered LTM + recent turns buffer to the LLM with
 
 ---
 
-## 📄 License
 
-MIT — fork it, mod it, ship your own campaign.
-
----
 
 <div align="center">
 
-Made with 🎲 &nbsp;|&nbsp; *"The DM never forgets."*
+ *"The DM never forgets."*
 
 </div>
