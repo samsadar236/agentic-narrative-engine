@@ -12,7 +12,7 @@
 
 *A text-based RPG where the DM actually remembers — your name, your companions, your choices, your world.*
 
- **[📸 Screenshots](#-screenshots)** · **[🏗 Architecture](#-architecture)**
+ **[ Screenshots](#-screenshots)** · **[ Architecture](#-architecture)**
 
 </div>
 
