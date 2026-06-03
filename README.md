@@ -10,9 +10,9 @@
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-8B5CF6)](https://www.trychroma.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-*A text-based RPG where the DM actually remembers — your name, your companions, your choices, your world.*
+*A text-based RPG where the DM actually remembers. Your name, your companions, your choices, your world.*
 
- **[ Screenshots](#-screenshots)** · **[ Architecture](#-architecture)**
+ 
 
 </div>
 
@@ -20,7 +20,7 @@
 
 ## Overview
 
-DungeonMind AI is a terminal-based RPG where a large language model acts as your Dungeon Master — with genuine, persistent memory. It's not just a chatbot with a system prompt. It's a **LangGraph pipeline** with short-term recall, a structured long-term world state, hybrid semantic retrieval, and automatic memory decay, all running in real time with Groq's ultra-fast inference.
+DungeonMind AI is a terminal-based RPG where a large language model acts as your Dungeon Master, with genuine, persistent memory. It's not just a chatbot with a system prompt. It's a **LangGraph pipeline** with short-term recall, a structured long-term world state, hybrid semantic retrieval, and automatic memory decay, all running in real time with Groq's ultra-fast inference.
 
 Most LLM-powered games forget you the moment the context window fills. DungeonMind doesn't. It tracks your character stats, every NPC you've met, your active quests and objectives, item locations, and key narrative decisions — extracting and structuring them every 5 turns in the background, keeping the world coherent across hundreds of turns.
 
